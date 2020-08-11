@@ -1,6 +1,6 @@
 # ReadMe
 
-## 文件夹说明   about folder
+## 分类说明   about folder
 
 - ### general
 
