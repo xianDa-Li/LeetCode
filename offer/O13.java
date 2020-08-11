@@ -16,7 +16,6 @@ public class O13 {
     int dfs(int m, int n, int i, int j, int k, boolean visited[][]){
         int isum;
         int jsum;
-
         if(i == 100) isum = 1;
         else isum = (int)i/10 + i%10;
         if(j == 100) jsum = 1;
