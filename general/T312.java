@@ -1,4 +1,4 @@
-package com.company.leetcode.common;
+package com.company.leetcode.general;
 
 public class T312 {
     public int maxCoins(int[] nums) {
