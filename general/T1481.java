@@ -20,13 +20,8 @@ public class T1481 {
 	public static int findLeastNumOfUniqueInts(int[] arr, int k) {
 		Map<Integer,Integer> hm = new HashMap<>();
 		for(int i=0;i<arr.length;i++){
-			if(hm.containsKey(arr[i])){
-				hm.replace(arr[i],hm.get(arr[i])+1);
-			}
-			else
-			{
-				hm.put(arr[i],1);
-			}
+			if(hm.containsKey(arr[i])) hm.replace(arr[i],hm.get(arr[i])+1);
+			else hm.put(arr[i],1);
 		}
 		if(k==0) return hm.size();              //如果k为0直接返回所有不同整数个数
 		int[] val = new int[hm.size()];
@@ -34,13 +29,10 @@ public class T1481 {
 		for(int key:hm.keySet()){
 			val[a++] = hm.get(key);
 		}
-
 		Arrays.sort(val);                       //排序后即可从小到大依次用K来减
 		int i = 0;
 		for(i=0;i<val.length;i++){
-			if(k-val[i]>=0){
-				k = k-val[i];
-			}
+			if(k-val[i]>=0) k = k-val[i];
 			else break;
 		}
 		return val.length - i;                   //返回被k减后剩余的不同整数个数
