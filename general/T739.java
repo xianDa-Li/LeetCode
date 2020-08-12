@@ -10,10 +10,10 @@ public class T739 {
     }
 
     public static  int[] dailyTemperatures(int[] T) {
-//        int[] D = new int[T.length];
-//        for(int i=0;i<T.length-1;i++){
-//            for(int j=i+1;j<T.length;j++){
-//                if(T[j]>T[i]){
+//        int[] D = new int[T35.length];
+//        for(int i=0;i<T35.length-1;i++){
+//            for(int j=i+1;j<T35.length;j++){
+//                if(T35[j]>T35[i]){
 //                    D[i] = j-i;
 //                    break;
 //                }
