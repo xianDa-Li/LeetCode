@@ -1,44 +1,56 @@
 package com.company.leetcode.offer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Author: XianDaLi
- * Date: 2020/8/15 2:33
- * Remark:输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
- * 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+ * Date: 2020/8/18 0:04
+ * Remark:输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。
+ * 如果有多对数字的和等于s，则输出任意一对即可。
  */
 public class O57 {
-	/*
-	思路：滑动窗口
-	当窗口的和小于target,窗口需要扩大，右边界扩大
-	当窗口的和大于target,窗口需要缩小，左边界缩小
-	当窗口和等于target,记录值。记录完值后，左边界缩小即可，寻找left+1开头的数组
-	时间O(n)
-	空间O(1)
-	 */
-	public int[][] findContinuousSequence(int target) {
-		int left=1,right=1;
-		int sum=0;
-		List<int[]> list = new ArrayList<>();
-		while ( left <= target/2){
-			if(sum < target){           //移动右边界
-				sum+=right;
-				right++;
-			}else if(sum > target){     //移动左边界
-				sum-=left;
-				left++;
-			}else {                     // 相等时就记录结果
-				int [] arr = new int[right-left];
-				for (int i = left; i < right; i++)
-					arr[i-left] = i;
 
-				list.add(arr);
-				sum-=left;              //移动左边界
-				left++;
-			}
+	/*
+	方法一：双指针
+		思路：
+			1.因为是递增数组，如果nums[left] + nums[right] > target
+				则right往前移动。这样能让nums[right]的值减小，则nums[left] + nums[right]的和也减小
+			2.如果nums[left] + nums[right] < target
+				则left往后移动。这样能让nums[left]的值增大，则nums[left] + nums[right]的和也增大
+			3.如果nums[left] + nums[right] == target
+				则直接跳出循环，将nums[left],nums[right] 放入返回的数组即可。
+		时间O(n)
+		空间O(1)
+	 */
+	public int[] twoSum(int[] nums, int target) {
+		int left = 0;
+		int right = nums.length-1;
+		while (left < right){
+			if(nums[left] + nums[right] > target) right--;
+			else if(nums[left] + nums[right] < target) left++;
+			else break;
 		}
-		return list.toArray(new int[list.size()][]);
+		return new int[]{nums[left],nums[right]};
+	}
+
+	/*
+	方法二：map
+		思路：将 nums[i]为key,target-nums[i]为value依次放入map中，当key存在target-num时，取出<k,V>放入ans数组即可
+		时间O(n)
+		空间O(n)
+ */
+	public int[] twoSum2(int[] nums, int target) {
+		Map<Integer,Integer> hm = new HashMap<>();
+		int[] ans = new int[2];
+		for(int num : nums){
+			if(hm.containsKey(target-num)){
+				ans[0] = num;
+				ans[1] = target-num;
+				break;
+			}
+			hm.put(num,target-num);
+		}
+		return ans;
 	}
 }
