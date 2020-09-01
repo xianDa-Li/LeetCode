@@ -36,7 +36,6 @@ public class O37 {
 		}
 		res.deleteCharAt(res.length()-1); // 删掉最后一个,
 		res.append("]");
-		Queue<Integer> q = new PriorityQueue<>();
 		return res.toString();
 	}
 
@@ -60,6 +59,7 @@ public class O37 {
 				queue.add(node.right);  // 再添加右子节点
 			}
 			i++;
+
 		}
 		return root;
 	}
