@@ -5,39 +5,41 @@ import java.util.*;
 /**
  * Author: XianDaLi
  * Date: 2020/9/1 22:39
- * Remark:
+ * Remark:模拟LRU缓存
  */
 public class T146 {
 	class LRUCache {
-
-		private int len;
-		private HashMap<Integer,Integer> map;
+		Queue<Integer> queue;
+		Map<Integer,Integer> map;
+		int capacity;
 		public LRUCache(int capacity) {
-			map = new LinkedHashMap<>();
-			len = capacity;
+			this.map = new HashMap<>();
+			this.queue = new LinkedList<>();
+			this.capacity = capacity;
 		}
 
 		public int get(int key) {
-			if(map.keySet().contains(key)){
-				int value = map.get(key);
-				map.remove(key);
-				map.put(key,value);
-				return value;
-			}
-			return -1;
+			if(queue.contains(key)){
+				queue.remove(key);
+				queue.add(key);
+				return map.get(key);
+			}else return -1;
 		}
 
 		public void put(int key, int value) {
-			if(map.keySet().contains(key)){
-				map.remove(key);
-			}else if(map.size() == len){
-				Iterator<Map.Entry<Integer,Integer>> iterator = map.entrySet().iterator();
-				iterator.next();
-				iterator.remove();
-				// int firstKey = map.entrySet().iterator().next().getValue();
-				// map.remove(firstKey);
+			if(queue.contains(key)){
+				queue.remove(key);
+				queue.add(key);
+				map.put(key,value);
+			}else if(capacity == 0){
+				map.remove(queue.poll());
+				queue.add(key);
+				map.put(key,value);
+			}else{
+				queue.add(key);
+				map.put(key,value);
+				capacity--;
 			}
-			map.put(key,value);
 		}
 	}
 }
