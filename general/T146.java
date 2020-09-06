@@ -8,11 +8,41 @@ import java.util.*;
  * Remark:模拟LRU缓存
  */
 public class T146 {
+
+	/*
+	 LinkedHashMap模拟
+	 */
 	class LRUCache {
+		int size;
+		LinkedHashMap<Integer,Integer> map;
+		public LRUCache(int capacity) {
+			size = capacity;
+			map = new LinkedHashMap<Integer,Integer>(size,0.75f,true){
+				@Override
+				public boolean removeEldestEntry(Map.Entry eldest){
+					return map.size() > size;
+				}
+			};
+		}
+
+		public int get(int key) {
+			return map.getOrDefault(key,-1);
+		}
+
+		public void put(int key, int value) {
+			map.put(key,value);
+		}
+	}
+
+
+	/*
+		双端队列模拟
+	 */
+	class LRUCache2 {
 		Queue<Integer> queue;
 		Map<Integer,Integer> map;
 		int capacity;
-		public LRUCache(int capacity) {
+		public LRUCache2(int capacity) {
 			this.map = new HashMap<>();
 			this.queue = new LinkedList<>();
 			this.capacity = capacity;
